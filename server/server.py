@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask
 from experiments import dummy, worker
 
 app = Flask(__name__)
@@ -12,6 +12,7 @@ class Experiment():
 experiment_manifest = {
     'dummy': Experiment(dummy, 'A dummy task'),
 }
+
 
 @app.route('/')
 def hello_world():
@@ -28,6 +29,7 @@ Welcome to the fuze api server
 
 </pre></body></html>
 """
+
 
 @app.route('/api/experiments/status')
 def inspect_experiments():
@@ -58,16 +60,11 @@ def run_experiments(name):
 
 @app.route('/api')
 def api_example():
-    return { 'this_is': { 'a': 'json' }, 'file': 42 }
+    return {'this_is': {'a': 'json'}, 'file': 42}
 
 @app.route('/api/<method>')
 def api_method_example(method):
-    return { 'this_is': { 'a': method }, 'file': 42 }
+    return {'this_is': {'a': method}, 'file': 42}
 
-if __name__== '__main__':
-    # PORT = os.environ.get(PORT)
-    # HOST = os.environ.get(HOST)
-    # print( HOST + ":" + (PORT))
-    # app.run(host=HOST,port=int(PORT))
+if __name__ == '__main__':
     app.run(host="0.0.0.0")
-

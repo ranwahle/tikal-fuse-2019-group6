@@ -1,16 +1,16 @@
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
-  name: grafana-ing
+  name: kibana-ing
   annotations:
     # use the shared ingress-nginx
     kubernetes.io/ingress.class: "nginx"
 spec:
   rules:
-  - host: grafana.hello-world.xyz
+  - host: kibana.hello-world.xyz
     http:
       paths:
       - path: /
         backend:
-          serviceName: exegetical-seastar-grafana
-          servicePort: 80
+          serviceName: kibana
+          servicePort: 443
