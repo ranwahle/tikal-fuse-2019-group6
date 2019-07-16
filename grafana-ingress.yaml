@@ -1,0 +1,16 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: grafana-ing
+  annotations:
+    # use the shared ingress-nginx
+    kubernetes.io/ingress.class: "nginx"
+spec:
+  rules:
+  - host: g6.fuse.tikal.io
+    http:
+      paths:
+      - path: /grafana
+        backend:
+          serviceName: exegetical-seastar-grafana
+          servicePort: 80
