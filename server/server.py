@@ -1,5 +1,5 @@
 from flask import Flask
-from experiments import dummy, worker
+from experiments import dummy, worker, attack_cart
 
 app = Flask(__name__)
 
@@ -11,6 +11,7 @@ class Experiment():
 
 experiment_manifest = {
     'dummy': Experiment(dummy, 'A dummy task'),
+    'attack_cart': Experiment(attack_cart, 'Attacks the cart'),
 }
 
 
