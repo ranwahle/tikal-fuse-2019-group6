@@ -3,8 +3,14 @@ from experiments import dummy, worker
 
 app = Flask(__name__)
 
+class Experiment():
+
+    def __init__(self, task, desc):
+        self.task = task
+        self.desc = desc
+
 experiment_manifest = {
-    'dummy': dummy,
+    'dummy': Experiment(dummy, 'A dummy task'),
 }
 
 @app.route('/')
@@ -27,15 +33,27 @@ Welcome to the fuze api server
 def inspect_experiments():
     i = worker.control.inspect()
     return {
-        'registered': i.registered(),
+        #'registered': i.registered(),
         'active': i.active(),
-        'scheduled': i.scheduled(),
-        'reserved': i.reserved(),
+        #'scheduled': i.scheduled(),
+        #'reserved': i.reserved(),
     }
 
-@app.route('/api/experiments/dummy/run')
-def run_dummy():
-    dummy.delay()
+@app.route('/api/experiments')
+def list_experiments():
+    return { 'experiments': [ { 'name': k, 'description': v.desc } for k, v in
+            experiment_manifest.items() ] }
+
+@app.route('/api/experiments/<name>/run')
+def run_experiments(name):
+
+    experiment = experiment_manifest.get(name)
+
+    if not experiment:
+        return "no experiment with name `{}`".format(name)
+
+    experiment.task.delay()
+
     return { 'result': 'ok' }
 
 @app.route('/api')
