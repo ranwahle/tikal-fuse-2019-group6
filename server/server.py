@@ -1,13 +1,11 @@
 from flask import Flask, request, jsonify
 from experiments import dummy, worker
-# import experiments
-# from celery import Celery
-
-#worker = Celery('experiments',
-#    backend='redis://localhost',
-#    broker='redis://localhost')
 
 app = Flask(__name__)
+
+experiment_manifest = {
+    'dummy': dummy,
+}
 
 @app.route('/')
 def hello_world():
@@ -53,5 +51,5 @@ if __name__== '__main__':
     # HOST = os.environ.get(HOST)
     # print( HOST + ":" + (PORT))
     # app.run(host=HOST,port=int(PORT))
-    app.run()
+    app.run(host="0.0.0.0")
 
