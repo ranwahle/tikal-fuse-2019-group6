@@ -1,7 +1,9 @@
 import axios from "axios";
 
-function getExperiments() {
-    return axios.get('/api/experiments/status')
+async function getExperiments() {
+    const response = await axios.get('/api/experiments/status')
+
+    return response.data;
 }
 
 export default getExperiments;
