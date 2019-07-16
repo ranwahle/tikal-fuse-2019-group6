@@ -1,7 +1,13 @@
 from flask import Flask, request, jsonify
+from experiments import dummy, worker
+# import experiments
+# from celery import Celery
+
+#worker = Celery('experiments',
+#    backend='redis://localhost',
+#    broker='redis://localhost')
 
 app = Flask(__name__)
-
 
 @app.route('/')
 def hello_world():
@@ -16,6 +22,16 @@ Welcome to the fuze api server
 
 </pre></body></html>
 """
+
+@app.route('/api/experiments')
+def inspect_experiments():
+    i = worker.control.inspect()
+    return {
+        'registered': i.registered(),
+        'active': i.active(),
+        'scheduled': i.scheduled(),
+        'reserved': i.reserved(),
+    }
 
 @app.route('/api')
 def api_example():
