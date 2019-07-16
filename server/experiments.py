@@ -9,13 +9,6 @@ worker = Celery('experiments',
                 broker='redis://localhost')
 
 
-@worker.task
-def dummy():
-    while True:
-        print("working....")
-        time.sleep(10)
-
-
 @worker.task()
 def attack_cart():
     # 03fef6ac-1896-4ce8-bd69-b798f85c6e0b

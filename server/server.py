@@ -1,5 +1,5 @@
 from flask import Flask
-from experiments import dummy, worker, attack_cart
+from experiments import worker, attack_cart
 
 app = Flask(__name__)
 
@@ -12,7 +12,6 @@ class Experiment:
 
 
 experiment_manifest = {
-    'dummy': Experiment(dummy, 'A dummy task'),
     'attack_cart': Experiment(attack_cart, 'Attacks the cart'),
 }
 
@@ -25,10 +24,9 @@ Hello!
 ======
 Welcome to the fuze api server
 
-<a href="/api">/api</a>
-<a href="/api/some_method">/api/some_mehod</a>
+<a href="/api/experiments">/api/experiments/status</a>
 <a href="/api/experiments/status">/api/experiments/status</a>
-<a href="/api/experiments/dummy/run">/api/experiments/dummy/run</a>
+<a href="/api/experiments/attack_cart/run">/api/experiments/dummy/run</a>
 
 </pre></body></html>
 """
@@ -58,16 +56,6 @@ def run_experiments(name):
     experiment.task.delay()
 
     return {'result': 'ok'}
-
-
-@app.route('/api')
-def api_example():
-    return {'this_is': {'a': 'json'}, 'file': 42}
-
-
-@app.route('/api/<method>')
-def api_method_example(method):
-    return {'this_is': {'a': method}, 'file': 42}
 
 
 if __name__ == '__main__':
