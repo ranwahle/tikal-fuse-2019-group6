@@ -19,11 +19,13 @@ Welcome to the fuze api server
 
 <a href="/api">/api</a>
 <a href="/api/some_method">/api/some_mehod</a>
+<a href="/api/experiments/status">/api/experiments/status</a>
+<a href="/api/experiments/dummy/run">/api/experiments/dummy/run</a>
 
 </pre></body></html>
 """
 
-@app.route('/api/experiments')
+@app.route('/api/experiments/status')
 def inspect_experiments():
     i = worker.control.inspect()
     return {
@@ -32,6 +34,11 @@ def inspect_experiments():
         'scheduled': i.scheduled(),
         'reserved': i.reserved(),
     }
+
+@app.route('/api/experiments/dummy/run')
+def run_dummy():
+    dummy.delay()
+    return { 'result': 'ok' }
 
 @app.route('/api')
 def api_example():
